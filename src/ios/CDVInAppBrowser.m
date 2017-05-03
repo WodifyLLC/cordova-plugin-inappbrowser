@@ -1206,21 +1206,7 @@
     return YES;
 }
 
-/**
- * Elli Rego added lines below to fix deprecation warning.
- *
- * Updated 04/28/17 by Brian Gall.
- */
-
-// NSUNumber return type incompatible (deprecated)
-//- (NSUNumber)supportedInterfaceOrientations
-
-// UIInterfaceOrientationmask return type now supported
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations
-
-/**
- * End of Elli Rego's additions.
- */
+- (NSUInteger)supportedInterfaceOrientations
 {
     if ((self.orientationDelegate != nil) && [self.orientationDelegate respondsToSelector:@selector(supportedInterfaceOrientations)]) {
         return [self.orientationDelegate supportedInterfaceOrientations];
