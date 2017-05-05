@@ -77,11 +77,11 @@
 
 - (BOOL) isSystemUrl:(NSURL*)url
 {
-	if ([[url host] isEqualToString:@"itunes.apple.com"]) {
-		return YES;
-	}
+    if ([[url host] isEqualToString:@"itunes.apple.com"]) {
+        return YES;
+    }
 
-	return NO;
+    return NO;
 }
 
 - (void)open:(CDVInvokedUrlCommand*)command
@@ -282,7 +282,13 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.inAppBrowserViewController != nil) {
             _previousStatusBarStyle = -1;
-            [self.viewController dismissViewControllerAnimated:YES completion:nil];
+            /*
+              ** 2017-05-05 Brian Gall:
+              ** Commented out the line below to fix hide issue.
+              ** With the latest version of IAB the view controller used here must change.
+            */
+            //[self.viewController dismissViewControllerAnimated:YES completion:nil];
+            [self.inAppBrowserViewController dismissViewControllerAnimated:YES completion:nil];
         }
     });
 }
