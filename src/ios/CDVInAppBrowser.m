@@ -531,7 +531,7 @@
  * Updated 04/28/17 by Brian Gall.
  */
 
-- (void) openExternalLink:(NSURL*) url
+- (void)openExternalLink:(NSURL*) url
 {
     [self openInSystem:url];
 }
