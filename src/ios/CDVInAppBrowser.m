@@ -111,6 +111,11 @@
         } else if ([target isEqualToString:kInAppBrowserTargetSystem]) {
             [self openInSystem:absoluteUrl];
         } else { // _blank or anything else
+            /*
+              ** 2017-05-05 Brian Gall:
+              ** Added line below to set the internal base URL
+            */
+            [self setInternalBaseUrl:absoluteUrl];
             [self openInInAppBrowser:absoluteUrl withOptions:options];
         }
 
