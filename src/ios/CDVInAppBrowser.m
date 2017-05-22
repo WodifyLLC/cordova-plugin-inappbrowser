@@ -692,7 +692,7 @@
      *
      * Updated 04/28/17 by Brian Gall.
      */
-    self.spinner.color = [UIColor colorWithRed:0.93 green:0.80 blue:0.80 alpha:1.0];
+    self.spinner.color = [UIColor colorWithRed:0.35 green:0.24 blue:0.55 alpha:1.0];
     /**
      * End of Elli Rego's additions.
      */
