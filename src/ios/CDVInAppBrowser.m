@@ -268,8 +268,6 @@
     if (self.inAppBrowserViewController == nil) {
         NSLog(@"Tried to hide IAB after it was closed.");
         return;
-
-
     }
     if (_previousStatusBarStyle == -1) {
         NSLog(@"Tried to hide IAB while already hidden");
@@ -288,6 +286,7 @@
               ** With the latest version of IAB the view controller used here must change.
             */
             //[self.viewController dismissViewControllerAnimated:YES completion:nil];
+            [self.inAppBrowserViewController viewWillDisappear:YES];
             [self.inAppBrowserViewController dismissViewControllerAnimated:YES completion:nil];
         }
     });
