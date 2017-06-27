@@ -254,11 +254,17 @@
             CGRect frame = [[UIScreen mainScreen] bounds];
             UIWindow *tmpWindow = [[UIWindow alloc] initWithFrame:frame];
             UIViewController *tmpController = [[UIViewController alloc] init];
+            CDVPluginResult* pluginResult;
+
             [tmpWindow setRootViewController:tmpController];
             [tmpWindow setWindowLevel:UIWindowLevelNormal];
 
             [tmpWindow makeKeyAndVisible];
             [tmpController presentViewController:nav animated:YES completion:nil];
+
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+            [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
     });
 }
@@ -280,6 +286,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.inAppBrowserViewController != nil) {
             _previousStatusBarStyle = -1;
+
+            CDVPluginResult* pluginResult;
             /*
               ** 2017-05-05 Brian Gall:
               ** Commented out the line below to fix hide issue.
@@ -288,6 +296,10 @@
             //[self.viewController dismissViewControllerAnimated:YES completion:nil];
             [self.inAppBrowserViewController viewWillDisappear:YES];
             [self.inAppBrowserViewController dismissViewControllerAnimated:YES completion:nil];
+
+            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
         }
     });
 }
