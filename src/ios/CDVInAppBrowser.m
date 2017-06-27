@@ -298,8 +298,6 @@
               ** With the latest version of IAB the view controller used here must change.
             */
             //[self.viewController dismissViewControllerAnimated:YES completion:nil];
-            [self.inAppBrowserViewController viewWillDisappear:YES];
-            [self.inAppBrowserViewController.webView.window setWindowLevel:1.0];
             [self.inAppBrowserViewController dismissViewControllerAnimated:YES completion:nil];
 
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
