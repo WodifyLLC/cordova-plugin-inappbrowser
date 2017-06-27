@@ -257,7 +257,11 @@
             CDVPluginResult* pluginResult;
 
             [tmpWindow setRootViewController:tmpController];
-            [tmpWindow setWindowLevel:UIWindowLevelNormal];
+            // 2017-06-27 Brian Gall:
+            // Changed UIWindowLevelNormal to a static 1.2
+            // to fix magnifying glass issue but keep the
+            // IAB under the status bar
+            [tmpWindow setWindowLevel:1.2];
 
             [tmpWindow makeKeyAndVisible];
             [tmpController presentViewController:nav animated:YES completion:nil];
@@ -295,6 +299,7 @@
             */
             //[self.viewController dismissViewControllerAnimated:YES completion:nil];
             [self.inAppBrowserViewController viewWillDisappear:YES];
+            [self.inAppBrowserViewController.webView.window setWindowLevel:1.0];
             [self.inAppBrowserViewController dismissViewControllerAnimated:YES completion:nil];
 
             pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
