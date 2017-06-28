@@ -254,7 +254,6 @@
             CGRect frame = [[UIScreen mainScreen] bounds];
             UIWindow *tmpWindow = [[UIWindow alloc] initWithFrame:frame];
             UIViewController *tmpController = [[UIViewController alloc] init];
-            CDVPluginResult* pluginResult;
 
             [tmpWindow setRootViewController:tmpController];
             // 2017-06-27 Brian Gall:
@@ -262,13 +261,19 @@
             // to fix magnifying glass issue but keep the
             // IAB under the status bar
             [tmpWindow setWindowLevel:1.2];
-
             [tmpWindow makeKeyAndVisible];
-            [tmpController presentViewController:nav animated:YES completion:nil];
-
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-            [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
-            [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            
+            // 2017-06-27 Brian Gall:
+            // Added callback function which the JS
+            // uses to then begin polling local storage
+            void (^success)() = ^void() {
+                CDVPluginResult* pluginResult;
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+                [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            };
+            
+            [tmpController presentViewController:nav animated:YES completion:success];
         }
     });
 }
@@ -286,23 +291,32 @@
 
     _previousStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
 
+    __weak CDVInAppBrowser* weakSelf = self;
+
     // Run later to avoid the "took a long time" log message.
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.inAppBrowserViewController != nil) {
+        if (weakSelf.inAppBrowserViewController != nil) {
             _previousStatusBarStyle = -1;
 
-            CDVPluginResult* pluginResult;
             /*
               ** 2017-05-05 Brian Gall:
               ** Commented out the line below to fix hide issue.
               ** With the latest version of IAB the view controller used here must change.
             */
             //[self.viewController dismissViewControllerAnimated:YES completion:nil];
-            [self.inAppBrowserViewController dismissViewControllerAnimated:YES completion:nil];
-
-            pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-            [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
-            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            
+            void (^success)() = ^void() {
+                CDVPluginResult* pluginResult;
+                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+                [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
+                [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+            };
+            
+            if ([weakSelf.inAppBrowserViewController respondsToSelector:@selector(presentingViewController)]) {
+                [[weakSelf.inAppBrowserViewController presentingViewController] dismissViewControllerAnimated:YES completion:success];
+            } else {
+                [[weakSelf.inAppBrowserViewController parentViewController] dismissViewControllerAnimated:YES completion:success];
+            }
         }
     });
 }
