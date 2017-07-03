@@ -296,13 +296,6 @@
         if (self.inAppBrowserViewController != nil) {
             _previousStatusBarStyle = -1;
 
-            /*
-              ** 2017-05-05 Brian Gall:
-              ** Commented out the line below to fix hide issue.
-              ** With the latest version of IAB the view controller used here must change.
-            */
-            //[self.viewController dismissViewControllerAnimated:YES completion:nil];
-            
             void (^success)() = ^void() {
                 CDVPluginResult* pluginResult;
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
@@ -310,7 +303,14 @@
                 [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             };
 
-            [self.viewController dismissViewControllerAnimated:YES completion:success];
+            /*
+              ** 2017-05-05 Brian Gall:
+              ** Commented out the line below to fix hide issue.
+              ** With the latest version of IAB the view controller used here must change.
+              ** Added callback block 'success'
+            */
+            //[self.viewController dismissViewControllerAnimated:YES completion:nil];
+            [self.inAppBrowserViewController dismissViewControllerAnimated:YES completion:success];
         }
     });
 }
