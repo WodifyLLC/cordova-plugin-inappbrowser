@@ -291,11 +291,9 @@
 
     _previousStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
 
-    __weak CDVInAppBrowser* weakSelf = self;
-
     // Run later to avoid the "took a long time" log message.
     dispatch_async(dispatch_get_main_queue(), ^{
-        if (weakSelf.inAppBrowserViewController != nil) {
+        if (self.inAppBrowserViewController != nil) {
             _previousStatusBarStyle = -1;
 
             /*
@@ -309,14 +307,10 @@
                 CDVPluginResult* pluginResult;
                 pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
                 [pluginResult setKeepCallback:[NSNumber numberWithBool:YES]];
-                [weakSelf.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
             };
-            
-            if ([weakSelf.inAppBrowserViewController respondsToSelector:@selector(presentingViewController)]) {
-                [[weakSelf.inAppBrowserViewController presentingViewController] dismissViewControllerAnimated:YES completion:success];
-            } else {
-                [[weakSelf.inAppBrowserViewController parentViewController] dismissViewControllerAnimated:YES completion:success];
-            }
+
+            [self.viewController dismissViewControllerAnimated:YES completion:success];
         }
     });
 }
