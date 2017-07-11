@@ -262,11 +262,9 @@ public class InAppBrowser extends CordovaPlugin {
                     callbackContext.success();
                 }
             });
-            /**
-             * PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
-             * pluginResult.setKeepCallback(true);
-             * this.callbackContext.sendPluginResult(pluginResult);
-             */
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
+            pluginResult.setKeepCallback(true);
+            this.callbackContext.sendPluginResult(pluginResult);
         }
         else if (action.equals("hide")) {
             this.cordova.getActivity().runOnUiThread(new Runnable() {
@@ -280,11 +278,9 @@ public class InAppBrowser extends CordovaPlugin {
                     callbackContext.success();
                 }
             });
-            /**
-             * PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
-             * pluginResult.setKeepCallback(true);
-             * this.callbackContext.sendPluginResult(pluginResult);
-             */
+            PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
+            pluginResult.setKeepCallback(true);
+            this.callbackContext.sendPluginResult(pluginResult);
         }
         else {
             return false;
