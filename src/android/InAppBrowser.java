@@ -255,6 +255,11 @@ public class InAppBrowser extends CordovaPlugin {
                 @Override
                 public void run() {
                     dialog.show();
+                    /**
+                     * 2017-07-11 Brian Gall:
+                     * Added success callback here
+                     */
+                    callbackContext.success();
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
@@ -266,6 +271,11 @@ public class InAppBrowser extends CordovaPlugin {
                 @Override
                 public void run() {
                     dialog.hide();
+                    /**
+                     * 2017-07-11 Brian Gall:
+                     * Added success callback here
+                     */
+                    callbackContext.success();
                 }
             });
             PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
