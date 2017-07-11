@@ -259,7 +259,9 @@ public class InAppBrowser extends CordovaPlugin {
                      * 2017-07-11 Brian Gall:
                      * Added success callback here
                      */
-                    callbackContext.success();
+                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
+                     pluginResult.setKeepCallback(true);
+                     callbackContext.sendPluginResult(pluginResult);
                 }
             });
             /**
@@ -277,7 +279,9 @@ public class InAppBrowser extends CordovaPlugin {
                      * 2017-07-11 Brian Gall:
                      * Added success callback here
                      */
-                    callbackContext.success();
+                     PluginResult pluginResult = new PluginResult(PluginResult.Status.OK);
+                     pluginResult.setKeepCallback(true);
+                     callbackContext.sendPluginResult(pluginResult);
                 }
             });
             /**
